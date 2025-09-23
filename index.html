@@ -27,6 +27,7 @@
                     <span id="grad-indicator" class="mode-indicator">GRAD</span>
                     <span id="m-indicator" class="mode-indicator">M</span>
                 </div>
+                <div class="info-display" id="info-display">Calculadora lista</div>
                 <div class="main-display" id="display">0</div>
             </div>
         </div>
@@ -34,11 +35,11 @@
         <!-- Button Grid -->
         <div class="button-grid">
             <!-- Row 1 -->
-            <button class="btn function" onclick="clearAll()">AC</button>
-            <button class="btn function" onclick="clearEntry()">CE</button>
-            <button class="btn function" onclick="toggleSign()">+/-</button>
-            <button class="btn function" onclick="memoryClear()">MC</button>
-            <button class="btn function" onclick="memoryRecall()">MR</button>
+            <button class="btn function" onclick="clearAll()" tabindex="1">AC</button>
+            <button class="btn function" onclick="clearEntry()" tabindex="2">CE</button>
+            <button class="btn function" onclick="toggleSign()" tabindex="3">+/-</button>
+            <button class="btn function" onclick="memoryClear()" tabindex="4">MC</button>
+            <button class="btn function" onclick="memoryRecall()" tabindex="5">MR</button>
 
             <!-- Row 2 -->
             <button class="btn function" onclick="calculateFunction('sin')">sin</button>
@@ -88,6 +89,20 @@
             <button class="btn function" onclick="calculateFunction('exp')">EXP</button>
             <button class="btn operator" onclick="setOperation('+')">+</button>
             <button class="btn equals" onclick="calculate()">=</button>
+            
+            <!-- Row 9 - CSV Operations -->
+            <button class="btn csv" onclick="toggleCSVInput()">CSV</button>
+            <button class="btn csv" onclick="calculateCSVMean()">MEDIA</button>
+            <button class="btn csv" onclick="removeCSVElement()">QUITAR</button>
+            <button class="btn function" onclick="downloadErrorLog()">LOG</button>
+            <button class="btn csv" onclick="clearCSV()">CLR CSV</button>
+        </div>
+        
+        <!-- CSV Input Area (hidden by default) -->
+        <div class="csv-container" id="csv-container" style="display: none;">
+            <div class="csv-header">Valores CSV (separados por comas):</div>
+            <input type="text" id="csv-input" class="csv-input" placeholder="ej: 1,2,3,4,5">
+            <button class="btn csv" onclick="processCSVInput()">Procesar</button>
         </div>
     </div>
 
