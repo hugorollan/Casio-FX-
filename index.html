@@ -31,6 +31,9 @@
             </div>
         </div>
 
+        <!-- Info Field -->
+        <h2 id="info" class="grande" title="Info sobre el número">Info sobre el número</h2>
+
         <!-- Button Grid -->
         <div class="button-grid">
             <!-- Row 1 -->
@@ -58,8 +61,8 @@
             <button class="btn function" onclick="calculateFunction('reciprocal')">1/x</button>
             <button class="btn function" onclick="calculateFunction('factorial')">x!</button>
             <button class="btn function" onclick="calculateFunction('power')">x^y</button>
-            <button class="btn function" onclick="openParenthesis()">(</button>
-            <button class="btn function" onclick="closeParenthesis()">)</button>
+            <button class="btn function" onclick="mod()" id="modulo">|x|</button>
+            <button class="btn function" onclick="fact()" id="factorial">n!</button>
 
             <!-- Row 5 -->
             <button class="btn number" onclick="appendNumber('7')">7</button>
@@ -72,7 +75,7 @@
             <button class="btn number" onclick="appendNumber('4')">4</button>
             <button class="btn number" onclick="appendNumber('5')">5</button>
             <button class="btn number" onclick="appendNumber('6')">6</button>
-            <button class="btn operator" onclick="setOperation('×')">×</button>
+            <button class="btn operator" onclick="setOperation('×')" id="multiplicacion">×</button>
             <button class="btn function" onclick="calculateFunction('cube')">x³</button>
 
             <!-- Row 7 -->
@@ -86,8 +89,15 @@
             <button class="btn number" onclick="appendNumber('0')">0</button>
             <button class="btn function" onclick="appendDecimal()">.</button>
             <button class="btn function" onclick="calculateFunction('exp')">EXP</button>
-            <button class="btn operator" onclick="setOperation('+')">+</button>
-            <button class="btn equals" onclick="calculate()">=</button>
+            <button class="btn operator" onclick="setOperation('+')" id="suma">+</button>
+            <button class="btn equals" onclick="eq()" id="igual">=</button>
+
+            <!-- CSV Operations Row -->
+            <button class="btn function" onclick="sumatorio()">SUM</button>
+            <button class="btn function" onclick="ordenar()">SORT</button>
+            <button class="btn function" onclick="revertir()">REV</button>
+            <button class="btn function" onclick="quitar()">DEL</button>
+            <button class="btn function"></button>
         </div>
     </div>
 

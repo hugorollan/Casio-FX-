@@ -28,6 +28,24 @@ function updateDisplay() {
     }
 }
 
+function rellenar_info(result) {
+    const infoElement = document.getElementById('info');
+    const numResult = parseFloat(result);
+    
+    if (isNaN(numResult)) {
+        infoElement.textContent = "Info sobre el número";
+        return;
+    }
+    
+    if (numResult < 100) {
+        infoElement.textContent = "Info: El resultado es menor que 100";
+    } else if (numResult >= 100 && numResult <= 200) {
+        infoElement.textContent = "Info: El resultado está entre 100 y 200";
+    } else {
+        infoElement.textContent = "Info: El resultado es superior a 200";
+    }
+}
+
 function updateAngleModeIndicator() {
     document.getElementById('deg-indicator').classList.remove('active');
     document.getElementById('rad-indicator').classList.remove('active');
@@ -95,7 +113,12 @@ function calculate() {
         operator = null;
         waitingForNewOperand = true;
         updateDisplay();
+        rellenar_info(newValue);
     }
+}
+
+function eq() {
+    calculate();
 }
 
 function performCalculation(firstOperand, secondOperand, operator) {
@@ -173,9 +196,154 @@ function calculateFunction(func) {
         currentInput = formatResult(result);
         waitingForNewOperand = true;
         updateDisplay();
+        rellenar_info(result);
     } catch (error) {
         showError('Error');
     }
+}
+
+// Unary operations
+function mod() {
+    const inputValue = parseFloat(currentInput);
+    let result;
+    
+    try {
+        if (isNaN(inputValue)) {
+            throw new Error('Invalid input');
+        }
+        
+        result = inputValue < 0 ? -inputValue : inputValue;
+        currentInput = formatResult(result);
+        waitingForNewOperand = true;
+        updateDisplay();
+        rellenar_info(result);
+    } catch (error) {
+        showError('Error');
+    }
+}
+
+function fact() {
+    const inputValue = parseFloat(currentInput);
+    let result;
+    
+    try {
+        if (isNaN(inputValue) || inputValue < 0 || inputValue % 1 !== 0) {
+            throw new Error('Domain error');
+        }
+        
+        result = factorial(inputValue);
+        currentInput = formatResult(result);
+        waitingForNewOperand = true;
+        updateDisplay();
+        rellenar_info(result);
+    } catch (error) {
+        showError('Error');
+    }
+}
+
+// CSV Operations
+function sumatorio() {
+    try {
+        const values = validarCSV(currentInput);
+        const sum = values.reduce((acc, val) => acc + val, 0);
+        currentInput = formatResult(sum);
+        waitingForNewOperand = true;
+        updateDisplay();
+        rellenar_info(sum);
+    } catch (error) {
+        showError('Error CSV');
+    }
+}
+
+function ordenar() {
+    try {
+        const values = validarCSV(currentInput);
+        const sorted = values.sort((a, b) => a - b);
+        currentInput = sorted.join(',');
+        waitingForNewOperand = true;
+        updateDisplay();
+        const infoElement = document.getElementById('info');
+        infoElement.textContent = "Info: Lista ordenada";
+    } catch (error) {
+        showError('Error CSV');
+    }
+}
+
+function revertir() {
+    try {
+        const values = validarCSV(currentInput);
+        const reversed = values.reverse();
+        currentInput = reversed.join(',');
+        waitingForNewOperand = true;
+        updateDisplay();
+        const infoElement = document.getElementById('info');
+        infoElement.textContent = "Info: Lista revertida";
+    } catch (error) {
+        showError('Error CSV');
+    }
+}
+
+function quitar() {
+    try {
+        const values = validarCSV(currentInput);
+        if (values.length === 0) {
+            throw new Error('Lista vacía');
+        }
+        values.pop();
+        currentInput = values.length > 0 ? values.join(',') : '0';
+        waitingForNewOperand = true;
+        updateDisplay();
+        const infoElement = document.getElementById('info');
+        infoElement.textContent = "Info: Elemento eliminado";
+    } catch (error) {
+        showError('Error CSV');
+    }
+}
+
+// Validation functions
+function validar(input) {
+    if (!input || input.trim() === '') {
+        throw new Error('Entrada vacía');
+    }
+    
+    // Check if it's a CSV list
+    if (input.includes(',')) {
+        return validarCSV(input);
+    }
+    
+    // Check if it's a valid number (integer or decimal, positive or negative)
+    const num = parseFloat(input);
+    if (isNaN(num)) {
+        throw new Error('Número inválido');
+    }
+    
+    return num;
+}
+
+function validarCSV(input) {
+    if (!input || input.trim() === '') {
+        throw new Error('Lista CSV vacía');
+    }
+    
+    const values = input.split(',').map(val => val.trim());
+    const numbers = [];
+    
+    for (const val of values) {
+        if (val === '') {
+            throw new Error('Lista CSV incompleta');
+        }
+        const num = parseFloat(val);
+        if (isNaN(num)) {
+            throw new Error('Valor no numérico en CSV');
+        }
+        numbers.push(num);
+    }
+    
+    if (numbers.length === 0) {
+        throw new Error('Lista CSV vacía');
+    }
+    
+    return numbers;
 }
 
 // Utility functions
