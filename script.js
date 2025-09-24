@@ -87,6 +87,7 @@ function calculate() {
                 if (secondOperand === 0) throw new Error("División por cero");
                 displayValue = (firstOperand / secondOperand).toString();
                 break;
+            case "^": displayValue = Math.pow(firstOperand, secondOperand).toString(); break;
         }
         updateInfo(`${firstOperand} ${operation} ${secondOperand} =`);
         rellenar_info(parseFloat(displayValue));
@@ -184,14 +185,47 @@ function toRadians(value) {
 }
 
 function setAngleMode(mode) {
-    angleMode = mode;
-    document.querySelectorAll(".mode-indicator").forEach(el => el.classList.remove("active"));
-    document.getElementById(mode + "-indicator").classList.add("active");
-    updateInfo(`Modo cambiado a ${mode.toUpperCase()}`);
+    // If mode parameter is provided, use it, otherwise cycle through modes
+    if (!mode) {
+        // Cycle through modes: deg -> rad -> grad -> deg
+        switch (angleMode) {
+            case "deg": angleMode = "rad"; break;
+            case "rad": angleMode = "grad"; break;
+            case "grad": angleMode = "deg"; break;
+            default: angleMode = "deg";
+        }
+    } else {
+        angleMode = mode;
+    }
+    
+    // Remove active class from all angle mode indicators  
+    document.getElementById("deg-indicator").classList.remove("active");
+    document.getElementById("rad-indicator").classList.remove("active");
+    document.getElementById("grad-indicator").classList.remove("active");
+    // Add active class to the selected mode
+    document.getElementById(angleMode + "-indicator").classList.add("active");
+    updateInfo(`Modo cambiado a ${angleMode.toUpperCase()}`);
 }
 
 function inputPi() {
     displayValue = Math.PI.toString();
+    updateDisplay();
+}
+
+// ==================== PARENTHESES ====================
+function openParenthesis() {
+    // Simple implementation: append "(" to display
+    if (displayValue === "0") {
+        displayValue = "(";
+    } else {
+        displayValue += "(";
+    }
+    updateDisplay();
+}
+
+function closeParenthesis() {
+    // Simple implementation: append ")" to display
+    displayValue += ")";
     updateDisplay();
 }
 
