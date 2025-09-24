@@ -531,42 +531,73 @@ function clearCSV() {
 // Keyboard support
 function handleKeyboard(event) {
     const key = event.key;
+    const csvContainer = document.getElementById('csv-container');
+    const csvInput = document.getElementById('csv-input');
+    
+    // Check if CSV mode is active (container is visible)
+    const isCSVModeActive = csvContainer && csvContainer.style.display === 'block';
+    
+    // If CSV mode is active and the CSV input field is not focused, focus it and let it handle the input
+    if (isCSVModeActive && document.activeElement !== csvInput) {
+        // For numbers, decimal point, comma, and Backspace in CSV mode, focus the CSV input and let it handle the input naturally
+        if ((key >= '0' && key <= '9') || key === '.' || key === ',' || key === 'Backspace') {
+            csvInput.focus();
+            // Don't prevent default for these keys so they go to the CSV input field
+            return;
+        }
+    }
     
     event.preventDefault();
     
-    if (key >= '0' && key <= '9') {
-        appendNumber(key);
-    } else if (key === '.') {
-        appendDecimal();
-    } else if (key === '+') {
-        setOperation('+');
-    } else if (key === '-') {
-        setOperation('-');
-    } else if (key === '*') {
-        setOperation('×');
-    } else if (key === '/') {
-        setOperation('÷');
-    } else if (key === '^') {
-        setOperation('^');
-    } else if (key === 'Enter' || key === '=') {
-        calculate();
+    // Handle keyboard shortcuts that work in both modes
+    if (key === 'Enter') {
+        if (isCSVModeActive && document.activeElement === csvInput) {
+            processCSVInput();
+        } else {
+            calculate();
+        }
     } else if (key === 'Escape') {
-        clearAll();
-    } else if (key === 'Backspace') {
-        deleteLastChar();
-    } else if (key === 'Delete') {
-        clearEntry();
-    } else if (key === 's') {
-        calculateFunction('sqrt');
-    } else if (key === 'l') {
-        calculateFunction('log');
-    } else if (key === 'n') {
-        calculateFunction('ln');
-    } else if (key === 'p') {
-        inputPi();
+        if (isCSVModeActive) {
+            toggleCSVInput(); // Close CSV mode
+        } else {
+            clearAll();
+        }
     } else if (key === 'c') {
         toggleCSVInput();
     } else if (key === 'm') {
         calculateCSVMean();
+    }
+    
+    // Only handle calculator input if CSV mode is not active
+    if (!isCSVModeActive) {
+        if (key >= '0' && key <= '9') {
+            appendNumber(key);
+        } else if (key === '.') {
+            appendDecimal();
+        } else if (key === '+') {
+            setOperation('+');
+        } else if (key === '-') {
+            setOperation('-');
+        } else if (key === '*') {
+            setOperation('×');
+        } else if (key === '/') {
+            setOperation('÷');
+        } else if (key === '^') {
+            setOperation('^');
+        } else if (key === '=') {
+            calculate();
+        } else if (key === 'Backspace') {
+            deleteLastChar();
+        } else if (key === 'Delete') {
+            clearEntry();
+        } else if (key === 's') {
+            calculateFunction('sqrt');
+        } else if (key === 'l') {
+            calculateFunction('log');
+        } else if (key === 'n') {
+            calculateFunction('ln');
+        } else if (key === 'p') {
+            inputPi();
+        }
     }
 }
