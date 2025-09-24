@@ -16,6 +16,17 @@ function updateInfo(message) {
     document.getElementById("info-display").textContent = message;
 }
 
+function rellenar_info(resultado) {
+    const infoElement = document.getElementById("info");
+    if (resultado < 100) {
+        infoElement.textContent = "Info: El resultado es menor que 100";
+    } else if (resultado >= 100 && resultado <= 200) {
+        infoElement.textContent = "Info: El resultado está entre 100 y 200";
+    } else {
+        infoElement.textContent = "Info: El resultado es superior a 200";
+    }
+}
+
 // ==================== FUNCIONES DE ENTRADA ====================
 function appendNumber(number) {
     if (displayValue === "0") {
@@ -78,6 +89,7 @@ function calculate() {
                 break;
         }
         updateInfo(`${firstOperand} ${operation} ${secondOperand} =`);
+        rellenar_info(parseFloat(displayValue));
         operation = null;
         firstOperand = null;
         updateDisplay();
@@ -114,6 +126,7 @@ function calculateFunction(func) {
         }
         displayValue = value;
         updateDisplay();
+        rellenar_info(parseFloat(value));
     } catch (error) {
         displayValue = "Error";
         updateDisplay();
