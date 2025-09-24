@@ -84,6 +84,21 @@ body {
     color: #00ff00;
 }
 
+.grande {
+    background: #1a1a1a;
+    color: #ffa500;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    border-radius: 3px;
+    min-height: 25px;
+    margin: 5px 0;
+    border: 1px solid #333;
+    overflow: hidden;
+}
+
 .info-display {
     background: #1a1a1a;
     color: #ffa500;
