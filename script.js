@@ -101,6 +101,40 @@ function calculate() {
     }
 }
 
+// ==================== OPERACIONES UNITARIAS ====================
+function mod() {
+    const value = parseFloat(displayValue);
+    if (value < 0) {
+        displayValue = (-value).toString();
+    } else {
+        displayValue = value.toString();
+    }
+    updateDisplay();
+    rellenar_info(parseFloat(displayValue));
+}
+
+function fact() {
+    try {
+        const value = parseFloat(displayValue);
+        if (value < 0 || !Number.isInteger(value)) {
+            throw new Error("Factorial solo para enteros positivos");
+        }
+        const result = factorial(value);
+        displayValue = result.toString();
+        updateDisplay();
+        rellenar_info(result);
+    } catch (error) {
+        displayValue = "Error";
+        updateDisplay();
+        updateInfo(error.message);
+        errorLog.push(error.message);
+    }
+}
+
+function eq() {
+    calculate();
+}
+
 // ==================== FUNCIONES AVANZADAS ====================
 function calculateFunction(func) {
     try {
@@ -218,6 +252,78 @@ function removeCSVElement() {
 function clearCSV() {
     csvValues = [];
     updateInfo("CSV limpiado");
+}
+
+function sumatorio() {
+    if (csvValues.length === 0) {
+        updateInfo("No hay valores CSV para sumar");
+        return;
+    }
+    const sum = csvValues.reduce((a, b) => a + b, 0);
+    displayValue = sum.toString();
+    updateDisplay();
+    rellenar_info(sum);
+    updateInfo(`Sumatorio de ${csvValues.length} valores`);
+}
+
+function ordenar() {
+    if (csvValues.length === 0) {
+        updateInfo("No hay valores CSV para ordenar");
+        return;
+    }
+    csvValues.sort((a, b) => a - b);
+    displayValue = csvValues.join(", ");
+    updateDisplay();
+    updateInfo("Valores ordenados ascendentemente");
+}
+
+function revertir() {
+    if (csvValues.length === 0) {
+        updateInfo("No hay valores CSV para revertir");
+        return;
+    }
+    csvValues.reverse();
+    displayValue = csvValues.join(", ");
+    updateDisplay();
+    updateInfo("Orden de valores invertido");
+}
+
+function quitar() {
+    if (csvValues.length === 0) {
+        updateInfo("No hay valores CSV para quitar");
+        return;
+    }
+    csvValues.pop();
+    updateInfo(`Valor quitado. Restan ${csvValues.length}`);
+    if (csvValues.length > 0) {
+        displayValue = csvValues.join(", ");
+        updateDisplay();
+    } else {
+        displayValue = "0";
+        updateDisplay();
+    }
+}
+
+// ==================== VALIDACIÓN ====================
+function validar() {
+    const input = displayValue;
+    
+    // Test if it's a valid number (integer or decimal, positive or negative)
+    if (!isNaN(input) && input.trim() !== "") {
+        updateInfo("Entrada válida: número");
+        return true;
+    }
+    
+    // Test if it's a valid CSV list
+    const csvPattern = /^-?\d+(\.\d+)?(\s*,\s*-?\d+(\.\d+)?)*$/;
+    if (csvPattern.test(input)) {
+        updateInfo("Entrada válida: lista CSV");
+        return true;
+    }
+    
+    // Invalid input
+    updateInfo("Error: Entrada inválida");
+    return false;
 }
 
 function downloadErrorLog() {

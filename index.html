@@ -97,6 +97,20 @@
             <button class="btn csv" onclick="removeCSVElement()">QUITAR</button>
             <button class="btn function" onclick="downloadErrorLog()">LOG</button>
             <button class="btn csv" onclick="clearCSV()">CLR CSV</button>
+            
+            <!-- Row 10 - New Unitary and Binary Operations -->
+            <button class="btn function" id="modulo" onclick="mod()">MOD</button>
+            <button class="btn function" id="factorial" onclick="fact()">n!</button>
+            <button class="btn operator" id="multiplicacion" onclick="setOperation('×')">MULT</button>
+            <button class="btn operator" id="suma" onclick="setOperation('+')">SUMA</button>
+            <button class="btn equals" id="igual" onclick="eq()">=</button>
+            
+            <!-- Row 11 - New CSV Operations -->
+            <button class="btn csv" onclick="sumatorio()">SUM</button>
+            <button class="btn csv" onclick="ordenar()">ORDEN</button>
+            <button class="btn csv" onclick="revertir()">REV</button>
+            <button class="btn csv" onclick="quitar()">QUIT</button>
+            <button class="btn function" onclick="validar()">VALID</button>
         </div>
         
         <!-- CSV Input Area (hidden by default) -->
