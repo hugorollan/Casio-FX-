@@ -90,6 +90,23 @@ function updateMemoryIndicator() {
 
 // Number input functions
 function appendNumber(num) {
+    // Check if CSV mode is active
+    const csvContainer = document.getElementById('csv-container');
+    const csvInput = document.getElementById('csv-input');
+    const isCSVModeActive = csvContainer && csvContainer.style.display === 'block';
+    
+    // If CSV mode is active, focus the CSV input and add the number there
+    if (isCSVModeActive && csvInput) {
+        csvInput.focus();
+        // Add the number to the CSV input field
+        const currentValue = csvInput.value;
+        csvInput.value = currentValue + num;
+        // Trigger input event to simulate typing
+        csvInput.dispatchEvent(new Event('input', { bubbles: true }));
+        return;
+    }
+    
+    // Regular calculator input handling
     if (waitingForNewOperand) {
         currentInput = num;
         waitingForNewOperand = false;
@@ -101,6 +118,23 @@ function appendNumber(num) {
 }
 
 function appendDecimal() {
+    // Check if CSV mode is active
+    const csvContainer = document.getElementById('csv-container');
+    const csvInput = document.getElementById('csv-input');
+    const isCSVModeActive = csvContainer && csvContainer.style.display === 'block';
+    
+    // If CSV mode is active, focus the CSV input and add the decimal there
+    if (isCSVModeActive && csvInput) {
+        csvInput.focus();
+        // Add the decimal to the CSV input field
+        const currentValue = csvInput.value;
+        csvInput.value = currentValue + '.';
+        // Trigger input event to simulate typing
+        csvInput.dispatchEvent(new Event('input', { bubbles: true }));
+        return;
+    }
+    
+    // Regular calculator decimal handling
     if (waitingForNewOperand) {
         currentInput = '0.';
         waitingForNewOperand = false;
