@@ -1,5 +1,7 @@
 # CASIO FX-82 Scientific Calculator
 
+https://github.com/hugorollan/Casio-FX82
+
 Una calculadora científica web que emula la funcionalidad y apariencia de la famosa CASIO FX-82, desarrollada con HTML, CSS y JavaScript.
 
 ![CASIO FX-82 Calculator](https://github.com/user-attachments/assets/b706961f-85ce-4cc7-abc4-4ca5072cf197)
